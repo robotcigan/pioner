@@ -1,8 +1,8 @@
 (function() {
 
-	template("header", "templates/header.html");
-	template("footer", "templates/footer.html");
+	defaultFolder = "templates/"
 
-	repeat("bd.json");
+	template("header", "header.html")
+	template("footer", "footer.html")
 
 }());
