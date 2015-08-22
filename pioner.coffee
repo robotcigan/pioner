@@ -51,14 +51,18 @@ this.pioner =
 				# убирает кавычку в начале
 				textInsideRepeatSelector = itemInText.substring(1, itemInText.length)
 
-				for _i in [0...repeatList.length] by 1
-					# Элемент который указан для повтора получает первое значение
-					item.innerText = repeatList[0][textInsideRepeatSelector];
-					# Создаются другие элементы эквивалентные по типу указанному в HTML
-					node = document.createElement(repeatElementTagName);
-					textnode = document.createTextNode(repeatList[_i][textInsideRepeatSelector])
-					node.appendChild(textnode)
-					parent.appendChild(node)
+				repeatNodes(item, repeatList, textInsideRepeatSelector, repeatElementTagName, parent)
+
+		repeatNodes = (item, repeatList, textInsideRepeatSelector, repeatElementTagName, parent) ->
+			for _i in [0...repeatList.length] by 1
+				# console.log("i am working")
+				# Элемент который указан для повтора получает первое значение
+				item.innerText = repeatList[0][textInsideRepeatSelector];
+				# Создаются другие элементы эквивалентные по типу указанному в HTML
+				node = document.createElement(repeatElementTagName);
+				textnode = document.createTextNode(repeatList[_i][textInsideRepeatSelector])
+				node.appendChild(textnode)
+				parent.appendChild(node)
 
 		loadJSON()
 		repeatElement()

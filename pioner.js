@@ -24,7 +24,7 @@
       return document.body.innerHTML = newBody;
     },
     repeat: function(bd) {
-      var loadJSON, repeatElement;
+      var loadJSON, repeatElement, repeatNodes;
       loadJSON = function() {
         var json, req, url;
         req = new XMLHttpRequest();
@@ -39,7 +39,7 @@
         return json;
       };
       repeatElement = function(json) {
-        var _i, i, item, itemInText, j, node, parent, ref, repeatElementTagName, repeatList, results, textInsideRepeatSelector, textnode;
+        var i, item, itemInText, j, parent, ref, repeatElementTagName, repeatList, results, textInsideRepeatSelector;
         repeatElement = document.querySelectorAll('[repeat]');
         repeatList = json;
         results = [];
@@ -49,18 +49,19 @@
           parent = item.parentNode;
           itemInText = item.outerHTML.match(/".+?(?=")/g).toString();
           textInsideRepeatSelector = itemInText.substring(1, itemInText.length);
-          results.push((function() {
-            var k, ref1, results1;
-            results1 = [];
-            for (_i = k = 0, ref1 = repeatList.length; k < ref1; _i = k += 1) {
-              item.innerText = repeatList[0][textInsideRepeatSelector];
-              node = document.createElement(repeatElementTagName);
-              textnode = document.createTextNode(repeatList[_i][textInsideRepeatSelector]);
-              node.appendChild(textnode);
-              results1.push(parent.appendChild(node));
-            }
-            return results1;
-          })());
+          results.push(repeatNodes(item, repeatList, textInsideRepeatSelector, repeatElementTagName, parent));
+        }
+        return results;
+      };
+      repeatNodes = function(item, repeatList, textInsideRepeatSelector, repeatElementTagName, parent) {
+        var _i, j, node, ref, results, textnode;
+        results = [];
+        for (_i = j = 0, ref = repeatList.length; j < ref; _i = j += 1) {
+          item.innerText = repeatList[0][textInsideRepeatSelector];
+          node = document.createElement(repeatElementTagName);
+          textnode = document.createTextNode(repeatList[_i][textInsideRepeatSelector]);
+          node.appendChild(textnode);
+          results.push(parent.appendChild(node));
         }
         return results;
       };
