@@ -24,7 +24,7 @@
       return document.body.innerHTML = newBody;
     },
     repeat: function(bd) {
-      var loadJSON, repeatElement, repeatNodes;
+      var element, loadJSON, repeatElements;
       loadJSON = function() {
         var json, req, url;
         req = new XMLHttpRequest();
@@ -35,38 +35,25 @@
           console.log("JSON success load!!!");
         }
         json = JSON.parse(req.responseText);
-        repeatElement(json);
+        repeatElements(json);
         return json;
       };
-      repeatElement = function(json) {
-        var i, item, itemInText, j, parent, ref, repeatElementTagName, repeatList, results, textInsideRepeatSelector;
-        repeatElement = document.querySelectorAll('[repeat]');
-        repeatList = json;
+      element = function(selector) {
+        var elements, i, j, ref, results;
+        elements = document.querySelectorAll("[" + selector + "]");
         results = [];
-        for (i = j = 0, ref = repeatElement.length; j < ref; i = j += 1) {
-          item = repeatElement[i];
-          repeatElementTagName = repeatElement[i].nodeName;
-          parent = item.parentNode;
-          itemInText = item.outerHTML.match(/".+?(?=")/g).toString();
-          textInsideRepeatSelector = itemInText.substring(1, itemInText.length);
-          results.push(repeatNodes(item, repeatList, textInsideRepeatSelector, repeatElementTagName, parent));
+        for (i = j = 0, ref = elements.length; j < ref; i = j += 1) {
+          results.push(element = elements[i]);
         }
         return results;
       };
-      repeatNodes = function(item, repeatList, textInsideRepeatSelector, repeatElementTagName, parent) {
-        var _i, j, node, ref, results, textnode;
-        results = [];
-        for (_i = j = 0, ref = repeatList.length; j < ref; _i = j += 1) {
-          item.innerText = repeatList[0][textInsideRepeatSelector];
-          node = document.createElement(repeatElementTagName);
-          textnode = document.createTextNode(repeatList[_i][textInsideRepeatSelector]);
-          node.appendChild(textnode);
-          results.push(parent.appendChild(node));
-        }
-        return results;
+      repeatElements = function(json) {
+        var div;
+        div = document.createElement('div');
+        div.innerHTML = 'Привет, мир!';
+        return console.log(element("pionerRepeat"));
       };
-      loadJSON();
-      return repeatElement();
+      return loadJSON();
     }
   };
 

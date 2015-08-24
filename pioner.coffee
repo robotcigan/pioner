@@ -34,38 +34,54 @@ this.pioner =
 			if(req.status == 200)
 				console.log("JSON success load!!!")
 			json = JSON.parse(req.responseText)
-			repeatElement(json)
+			repeatElements(json)
 			return json
 
-		repeatElement = (json) ->
-			repeatElement = document.querySelectorAll('[repeat]')
-			repeatList = json
-			for i in [0...repeatElement.length] by 1
+		# repeatElement = (json) ->
+		# 	repeatElement = document.querySelectorAll('[repeat]')
+		# 	for i in [0...repeatElement.length] by 1
 
-				# Определение родителя элемента куда будут вставляться теги и название тега его название тега
-				item = repeatElement[i]
-				repeatElementTagName = repeatElement[i].nodeName
-				parent = item.parentNode
-				# Находит название того, что нужно повторять, но с одной кавычкой в на
-				itemInText = item.outerHTML.match(/".+?(?=")/g).toString()
-				# убирает кавычку в начале
-				textInsideRepeatSelector = itemInText.substring(1, itemInText.length)
+		# 		# Определение родителя элемента куда будут вставляться теги и название тега его название тега
+		# 		item = repeatElement[i]
+		# 		repeatElementTagName = repeatElement[i].nodeName
+		# 		parent = item.parentNode
+		# 		# Находит название того, что нужно повторять, но с одной кавычкой в на
+		# 		itemInText = item.outerHTML.match(/".+?(?=")/g).toString()
+		# 		# убирает кавычку в начале
+		# 		textInsideRepeatSelector = itemInText.substring(1, itemInText.length)
 
-				repeatNodes(item, repeatList, textInsideRepeatSelector, repeatElementTagName, parent)
+		# 		repeatNodes(item, json, textInsideRepeatSelector, repeatElementTagName, parent)
 
-		repeatNodes = (item, repeatList, textInsideRepeatSelector, repeatElementTagName, parent) ->
-			for _i in [0...repeatList.length] by 1
-				# console.log("i am working")
-				# Элемент который указан для повтора получает первое значение
-				item.innerText = repeatList[0][textInsideRepeatSelector];
-				# Создаются другие элементы эквивалентные по типу указанному в HTML
-				node = document.createElement(repeatElementTagName);
-				textnode = document.createTextNode(repeatList[_i][textInsideRepeatSelector])
-				node.appendChild(textnode)
-				parent.appendChild(node)
+		# repeatNodes = (item, json, text, tag, parent) ->
+		# 	for _i in [0...json.length] by 1
+		# 		# console.log("i am working")
+		# 		# Элемент который указан для повтора получает первое значение
+		# 		item.innerText = json[0][text];
+		# 		# Создаются другие элементы эквивалентные по типу указанному в HTML
+		# 		node = document.createElement(tag);
+		# 		textnode = document.createTextNode(json[_i][text])
+		# 		node.appendChild(textnode)
+		# 		parent.appendChild(node)
+		element = (selector) ->
+			elements = document.querySelectorAll("[#{selector}]")
+			for i in [0...elements.length] by 1
+				element = elements[i]
+
+		repeatElements = (json) ->
+
+			div = document.createElement('div')
+			div.innerHTML = 'Привет, мир!'
+
+			console.log(element("pionerRepeat"))
+
+			# elements.appendChild(div)
+			# console.log(elements)
+
+			# elements.appendChild(div)
+			# console.log(element)
 
 		loadJSON()
-		repeatElement()
+		# repeatElement()
 
 
 # pioner.template("header", "header.html")
