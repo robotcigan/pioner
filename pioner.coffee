@@ -13,16 +13,18 @@ this.pioner =
 		templateFile.open("get", defaultFolder + template , false)
 		templateFile.send(null)
 
+		#возвращает полученные шаблон файла в текстовом варианте
 		return templateFile.responseText
 
 	template: (element, template) ->
+		#выбирает файл для подгрузки шаблона
 		file = this.getFile(template)
 
 		bodyText = document.body.outerHTML
-		# regular = /@{.+?}/g
 		regular = new RegExp("@{#{element}?}")
 		newBody = bodyText.replace(regular, file)
-		document.body.innerHTML = newBody
+		# отправляет новое body для замены в render()
+		this.render(newBody)
 
 	repeat: (bd) ->
 		# Загрузка json
@@ -36,51 +38,41 @@ this.pioner =
 			json = JSON.parse(req.responseText)
 			repeatElements(json)
 			return json
-
-		# repeatElement = (json) ->
-		# 	repeatElement = document.querySelectorAll('[repeat]')
-		# 	for i in [0...repeatElement.length] by 1
-
-		# 		# Определение родителя элемента куда будут вставляться теги и название тега его название тега
-		# 		item = repeatElement[i]
-		# 		repeatElementTagName = repeatElement[i].nodeName
-		# 		parent = item.parentNode
-		# 		# Находит название того, что нужно повторять, но с одной кавычкой в на
-		# 		itemInText = item.outerHTML.match(/".+?(?=")/g).toString()
-		# 		# убирает кавычку в начале
-		# 		textInsideRepeatSelector = itemInText.substring(1, itemInText.length)
-
-		# 		repeatNodes(item, json, textInsideRepeatSelector, repeatElementTagName, parent)
-
-		# repeatNodes = (item, json, text, tag, parent) ->
-		# 	for _i in [0...json.length] by 1
-		# 		# console.log("i am working")
-		# 		# Элемент который указан для повтора получает первое значение
-		# 		item.innerText = json[0][text];
-		# 		# Создаются другие элементы эквивалентные по типу указанному в HTML
-		# 		node = document.createElement(tag);
-		# 		textnode = document.createTextNode(json[_i][text])
-		# 		node.appendChild(textnode)
-		# 		parent.appendChild(node)
-		element = (selector) ->
+		elements = (selector) ->
 			elements = document.querySelectorAll("[#{selector}]")
 			for i in [0...elements.length] by 1
 				element = elements[i]
+			# возвращает массив элементов, совпадающих селектору
 
 		repeatElements = (json) ->
+			elements = elements("pionerRepeat")
 
-			div = document.createElement('div')
-			div.innerHTML = 'Привет, мир!'
+			# repeat elements по количеству пунктов в json
+			for x in [0...elements.length] by 1
+				element = elements[x]
+				# eузнаем тэг элемента
+				elementTag = elements[x].nodeName
+				# создать копию элемента
+				copy = element.cloneNode(true)
+				# вставляем новый узел после оригинала
+				element.parentNode.insertBefore(copy, element.nextSibling)
 
-			console.log(element("pionerRepeat"))
-
-			# elements.appendChild(div)
-			# console.log(elements)
-
-			# elements.appendChild(div)
-			# console.log(element)
+			for i in [0...elements.length] by 1
+				elementText = elements[i].outerHTML
+				regular = new RegExp("{{[^{]+}}")
+				bodyText = document.body.outerHTML
+				jsonPointRegularResult = bodyText.match(regular).toString()
+				jsonPoint = jsonPointRegularResult.slice(2, jsonPointRegularResult.length - 2)
+				# производит замену элементов в {{element}}
+				document.body.innerHTML = bodyText.replace(regular, json[i][jsonPoint])
 
 		loadJSON()
+	render: (newBody) ->
+		console.log("i am a render")
+		document.body.innerHTML = newBody
+
+
+
 		# repeatElement()
 
 

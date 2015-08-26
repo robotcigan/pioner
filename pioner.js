@@ -21,10 +21,10 @@
       bodyText = document.body.outerHTML;
       regular = new RegExp("@{" + element + "?}");
       newBody = bodyText.replace(regular, file);
-      return document.body.innerHTML = newBody;
+      return this.render(newBody);
     },
     repeat: function(bd) {
-      var element, loadJSON, repeatElements;
+      var elements, loadJSON, repeatElements;
       loadJSON = function() {
         var json, req, url;
         req = new XMLHttpRequest();
@@ -38,8 +38,8 @@
         repeatElements(json);
         return json;
       };
-      element = function(selector) {
-        var elements, i, j, ref, results;
+      elements = function(selector) {
+        var element, i, j, ref, results;
         elements = document.querySelectorAll("[" + selector + "]");
         results = [];
         for (i = j = 0, ref = elements.length; j < ref; i = j += 1) {
@@ -48,12 +48,30 @@
         return results;
       };
       repeatElements = function(json) {
-        var div;
-        div = document.createElement('div');
-        div.innerHTML = 'Привет, мир!';
-        return console.log(element("pionerRepeat"));
+        var bodyText, copy, element, elementTag, elementText, i, j, jsonPoint, jsonPointRegularResult, k, ref, ref1, regular, results, x;
+        elements = elements("pionerRepeat");
+        for (x = j = 0, ref = elements.length; j < ref; x = j += 1) {
+          element = elements[x];
+          elementTag = elements[x].nodeName;
+          copy = element.cloneNode(true);
+          element.parentNode.insertBefore(copy, element.nextSibling);
+        }
+        results = [];
+        for (i = k = 0, ref1 = elements.length; k < ref1; i = k += 1) {
+          elementText = elements[i].outerHTML;
+          regular = new RegExp("{{[^{]+}}");
+          bodyText = document.body.outerHTML;
+          jsonPointRegularResult = bodyText.match(regular).toString();
+          jsonPoint = jsonPointRegularResult.slice(2, jsonPointRegularResult.length - 2);
+          results.push(document.body.innerHTML = bodyText.replace(regular, json[i][jsonPoint]));
+        }
+        return results;
       };
       return loadJSON();
+    },
+    render: function(newBody) {
+      console.log("i am a render");
+      return document.body.innerHTML = newBody;
     }
   };
 
