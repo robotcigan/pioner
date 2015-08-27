@@ -50,12 +50,14 @@ this.pioner =
 			# repeat elements по количеству пунктов в json
 			for x in [0...elements.length] by 1
 				element = elements[x]
-				# eузнаем тэг элемента
-				elementTag = elements[x].nodeName
-				# создать копию элемента
-				copy = element.cloneNode(true)
-				# вставляем новый узел после оригинала
-				element.parentNode.insertBefore(copy, element.nextSibling)
+				for y in [0...json.length] by 1
+					# создать копию элемента
+					copy = element.cloneNode(true)
+					# Наполняем текстом новый элемент
+					copy.innerHTML = json[y].author
+					console.log(json[y].author)
+					# вставляем новый узел после оригинала
+					element.parentNode.insertBefore(copy, element.nextSibling)
 
 			for i in [0...elements.length] by 1
 				elementText = elements[i].outerHTML

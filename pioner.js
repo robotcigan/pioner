@@ -48,16 +48,19 @@
         return results;
       };
       repeatElements = function(json) {
-        var bodyText, copy, element, elementTag, elementText, i, j, jsonPoint, jsonPointRegularResult, k, ref, ref1, regular, results, x;
+        var bodyText, copy, element, elementText, i, j, jsonPoint, jsonPointRegularResult, k, l, ref, ref1, ref2, regular, results, x, y;
         elements = elements("pionerRepeat");
         for (x = j = 0, ref = elements.length; j < ref; x = j += 1) {
           element = elements[x];
-          elementTag = elements[x].nodeName;
-          copy = element.cloneNode(true);
-          element.parentNode.insertBefore(copy, element.nextSibling);
+          for (y = k = 0, ref1 = json.length; k < ref1; y = k += 1) {
+            copy = element.cloneNode(true);
+            copy.innerHTML = json[y].author;
+            console.log(json[y].author);
+            element.parentNode.insertBefore(copy, element.nextSibling);
+          }
         }
         results = [];
-        for (i = k = 0, ref1 = elements.length; k < ref1; i = k += 1) {
+        for (i = l = 0, ref2 = elements.length; l < ref2; i = l += 1) {
           elementText = elements[i].outerHTML;
           regular = new RegExp("{{[^{]+}}");
           bodyText = document.body.outerHTML;
