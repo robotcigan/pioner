@@ -1,6 +1,6 @@
 # pioner
 
-vanquishVersion = 0.1
+pionerVersion = 0.1
 
 this.pioner =
 	defaultFolder: (folder) ->
@@ -30,7 +30,6 @@ this.pioner =
 		# Загрузка json
 		loadJSON = ->
 			req = new XMLHttpRequest()
-			url = bd
 			req.open('GET', bd, false)
 			req.send(null)
 			if(req.status == 200)
@@ -46,7 +45,6 @@ this.pioner =
 
 		repeatElements = (json) ->
 			elements = elements("pioner-repeat")
-
 			# repeat elements по количеству пунктов в json
 			for x in [0...elements.length] by 1
 				element = elements[x]
@@ -62,6 +60,12 @@ this.pioner =
 						copy.innerHTML = copy.innerHTML.replace(regular2, json[y][whatToChange])
 					# вставляем новый узел после оригинала
 					element.parentNode.insertBefore(copy, element)
+				# удаляем оригинал
+				element.parentNode.removeChild(element)
+
+		textToElement = () ->
+			
+
 
 		loadJSON()
 	render: (newBody) ->

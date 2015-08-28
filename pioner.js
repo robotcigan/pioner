@@ -1,7 +1,7 @@
 (function() {
-  var vanquishVersion;
+  var pionerVersion;
 
-  vanquishVersion = 0.1;
+  pionerVersion = 0.1;
 
   this.pioner = {
     defaultFolder: function(folder) {
@@ -24,11 +24,10 @@
       return this.render(newBody);
     },
     repeat: function(bd) {
-      var elements, loadJSON, repeatElements;
+      var elements, loadJSON, repeatElements, textToElement;
       loadJSON = function() {
-        var json, req, url;
+        var json, req;
         req = new XMLHttpRequest();
-        url = bd;
         req.open('GET', bd, false);
         req.send(null);
         if (req.status === 200) {
@@ -48,30 +47,27 @@
         return results;
       };
       repeatElements = function(json) {
-        var changesList, copy, element, j, ref, regular, regular2, results, whatToChange, x, y, z;
+        var changesList, copy, element, j, k, l, ref, ref1, ref2, regular, regular2, results, whatToChange, x, y, z;
         elements = elements("pioner-repeat");
         results = [];
         for (x = j = 0, ref = elements.length; j < ref; x = j += 1) {
           element = elements[x];
-          results.push((function() {
-            var k, l, ref1, ref2, results1;
-            results1 = [];
-            for (y = k = 0, ref1 = json.length; k < ref1; y = k += 1) {
-              copy = element.cloneNode(true);
-              regular = new RegExp(/{{[^{]+}}/g);
-              changesList = copy.outerHTML.match(regular);
-              for (z = l = 0, ref2 = changesList.length; l < ref2; z = l += 1) {
-                whatToChange = changesList[z].slice(2, changesList[z].length - 2);
-                regular2 = new RegExp("{{" + whatToChange + "}}");
-                copy.innerHTML = copy.innerHTML.replace(regular2, json[y][whatToChange]);
-              }
-              results1.push(element.parentNode.insertBefore(copy, element));
+          for (y = k = 0, ref1 = json.length; k < ref1; y = k += 1) {
+            copy = element.cloneNode(true);
+            regular = new RegExp(/{{[^{]+}}/g);
+            changesList = copy.outerHTML.match(regular);
+            for (z = l = 0, ref2 = changesList.length; l < ref2; z = l += 1) {
+              whatToChange = changesList[z].slice(2, changesList[z].length - 2);
+              regular2 = new RegExp("{{" + whatToChange + "}}");
+              copy.innerHTML = copy.innerHTML.replace(regular2, json[y][whatToChange]);
             }
-            return results1;
-          })());
+            element.parentNode.insertBefore(copy, element);
+          }
+          results.push(element.parentNode.removeChild(element));
         }
         return results;
       };
+      textToElement = function() {};
       return loadJSON();
     },
     render: function(newBody) {
