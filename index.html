@@ -5,6 +5,11 @@
 	<title>Document</title>
 	<!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+	<style>
+		img{
+			max-width: 100%;
+		}
+	</style>
 </head>
 <body>
 
@@ -17,9 +22,13 @@
 		<div id="test"></div>
 
 		<div class="row">
-			<div class="col-md-4 text-center" pionerRepeat>
-				<h3>{{author}}</h3>
+			<div class="col-md-4" pioner-repeat>
+				<img src="{{images}}" alt="">
+				<h3>{{title}}</h3>
+				<span>{{author}}, </span>
+				<small>{{date}}</small>
 				<p>{{content}}</p>
+				<small>Likes {{likes}}</small>
 			</div>
 <!-- 			<div class="col-md-4" pionerRepeat>
 				<h3>{{date}}</h3>

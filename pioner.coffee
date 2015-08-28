@@ -45,7 +45,7 @@ this.pioner =
 			# возвращает массив элементов, совпадающих селектору
 
 		repeatElements = (json) ->
-			elements = elements("pionerRepeat")
+			elements = elements("pioner-repeat")
 
 			# repeat elements по количеству пунктов в json
 			for x in [0...elements.length] by 1
@@ -53,20 +53,15 @@ this.pioner =
 				for y in [0...json.length] by 1
 					# создать копию элемента
 					copy = element.cloneNode(true)
+					regular = new RegExp(/{{[^{]+}}/g)
+					changesList = copy.outerHTML.match(regular)
 					# Наполняем текстом новый элемент
-					copy.innerHTML = json[y].author
-					console.log(json[y].author)
+					for z in [0...changesList.length] by 1
+						whatToChange = changesList[z].slice(2, changesList[z].length - 2)
+						regular2 = new RegExp ("{{" + whatToChange + "}}")
+						copy.innerHTML = copy.innerHTML.replace(regular2, json[y][whatToChange])
 					# вставляем новый узел после оригинала
-					element.parentNode.insertBefore(copy, element.nextSibling)
-
-			for i in [0...elements.length] by 1
-				elementText = elements[i].outerHTML
-				regular = new RegExp("{{[^{]+}}")
-				bodyText = document.body.outerHTML
-				jsonPointRegularResult = bodyText.match(regular).toString()
-				jsonPoint = jsonPointRegularResult.slice(2, jsonPointRegularResult.length - 2)
-				# производит замену элементов в {{element}}
-				document.body.innerHTML = bodyText.replace(regular, json[i][jsonPoint])
+					element.parentNode.insertBefore(copy, element)
 
 		loadJSON()
 	render: (newBody) ->

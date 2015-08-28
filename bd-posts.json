@@ -4,41 +4,23 @@
 		"author": "Elvis",
 		"content": "in, hendrerit consectetuer, cursus et, magna. Praesent interdum ligula eu enim. Etiam imperdiet dictum magna.",
 		"date": "Jul 16, 2016",
-		"likes": 334
+		"likes": 334,
+		"images": "images/1.jpg"
 	},
 	{
 		"title": "lacinia. Sed",
 		"author": "Ryan",
 		"content": "Mauris magna. Duis dignissim tempor arcu. Vestibulum ut eros non enim commodo hendrerit. Donec porttitor tellus",
 		"date": "Nov 19, 2014",
-		"likes": 285
+		"likes": 285,
+		"images": "images/1.jpg"
 	},
 	{
 		"title": "dolor dolor, tempus non, lacinia",
 		"author": "Carly",
 		"content": "adipiscing elit. Etiam laoreet, libero et tristique pellentesque, tellus sem mollis dui, in sodales elit erat vitae risus.",
 		"date": "Jul 23, 2016",
-		"likes": 356
-	},
-	{
-		"title": "Duis gravida. Praesent eu",
-		"author": "Davis",
-		"content": "nulla at sem molestie sodales. Mauris blandit enim consequat purus. Maecenas libero est, congue a, aliquet vel, vulputate eu, odio. Phasellus at augue id ante",
-		"date": "Dec 19, 2014",
-		"likes": 290
-	},
-	{
-		"title": "rutrum, justo.",
-		"author": "Lani",
-		"content": "Proin eget odio. Aliquam vulputate ullamcorper magna. Sed eu eros. Nam consequat dolor vitae dolor. Donec fringilla. Donec feugiat metus sit",
-		"date": "Mar 18, 2016",
-		"likes": 341
-	},
-	{
-		"title": "eu sem.",
-		"author": "Kay",
-		"content": "sodales nisi magna sed dui. Fusce aliquam, enim nec tempus scelerisque, lorem ipsum sodales purus, in molestie tortor nibh sit amet orci.",
-		"date": "Jul 4, 2016",
-		"likes": 27
+		"likes": 356,
+		"images": "images/1.jpg"
 	}
 ]
